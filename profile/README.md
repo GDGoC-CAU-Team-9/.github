@@ -1,83 +1,98 @@
-# GDGoC CAU Team 9 프로젝트
+<p align="center">
+  <img src="https://raw.githubusercontent.com/GDGoC-CAU-Team-9/frontend/main/image/Logo.png" width="140" alt="SafePlate Logo" />
+</p>
 
-하단은 임시 문서로 .github 레포의 profile/README.md 파일 수정시 내용 변경됨
+<h1 align="center">SafePlate</h1>
+<p align="center">
+  언어와 문화 장벽이 있는 환경에서도, 개인/팀의 기피 재료를 반영해 더 안전한 메뉴 선택을 돕는 서비스
+</p>
 
-프로젝트 완성시 프로젝트 소개 페이지 등으로 변경 
+<p align="center">
+  <a href="https://github.com/GDGoC-CAU-Team-9/frontend">Frontend</a>
+  ·
+  <a href="https://github.com/GDGoC-CAU-Team-9/backend">Backend</a>
+</p>
 
-# 문제 상황
+---
 
-### 배경
+## 프로젝트 소개
+SafePlate는 알러지, 종교, 식습관, 개인 기호 등 다양한 기피 식재료를 반영해 소통이 어려운 상황에서 메뉴판을 분석하고,
+사용자가 안심하고 음식을 선택할 수 있도록 돕는 프로젝트입니다.
 
-문서의 맥락, 목표, 범위
+- 개인 프로필 기반 기피 재료 관리
+- 팀 단위 기피 재료 통합 분석
+- 메뉴 이미지 업로드 후 AI 분석
+- 분석 기록 저장/조회
 
-해외여행이나 낯선 환경에서의 식사, 특정 질병이나 종교적 신념, 알레르기를 가진 사람, 개인적으로 음식에 대한 호불호가 강한 사람 등 개인의 입장과 상황을 고려하여 소통의 어려움을 넘어서 사용자가 선호하고 사용자에게 안전한 음식을 제공할 수 있게 함.
+## 시스템 개요
+```mermaid
+flowchart LR
+    User[User] --> FE[Frontend\nFlutter]
+    FE -->|JWT| BE[Backend\nSpring Boot]
+    FE -->|Presigned URL 요청| BE
+    FE -->|이미지 업로드| S3[(AWS S3)]
+    FE -->|분석 요청| BE
+    BE -->|메뉴/기피재료 분석 요청| AI[AI Service]
+    BE --> DB[(MySQL)]
+    BE --> S3
+```
 
-해외 여행이나 낯선 환경에서의 식사는 많은 사람들에게 안전과 직결된 문제임에도 불구하고, 언어·문화적 장벽으로 인해 여전히 큰 불편과 위험을 동반함.
+## Frontend 분석
+Flutter 기반 앱으로 실제 사용자 흐름 중심 UX를 구현했습니다.
 
-- **언어 및 소통 장벽:** 해외 여행지에서 외국어로 된 메뉴판은 성분 파악이 불가능하며, 종업원과의 의사소통 오류로 인해 원치 않는 식재료를 섭취할 위험이 큼.
-- **복합적 개인 제한 사항:** 단순 알레르기를 넘어 종교(할랄, 코셔, 비건), 질병(당뇨, 셀리악병) 등 개인별로 회피해야 할 성분이 다양함. 개인적 음식에 대한 선호까지 고려하면 회피해야 할 성분은 더욱 다양해짐.
-- **종교적 수요:** 전 세계 무슬림 인구(할랄 식단 필요)는 약 19억 명에 달하며, 채식주의자(비건) 인구 역시 급증하고 있음.
-- **질병 관리:** 당뇨 환자의 당분 제한, 고혈압 환자의 나트륨 제한 등 식단 관리가 필수적인 만성 질환자가 여행 시 겪는 불안감이 매우 높음.
-- **데이터 복잡도:** 같은 음식이라도 국가, 지역, 식당별 레시피가 다르므로, 메뉴명 기반이 아닌 '성분 추론'이 필수적임.
+- 인증: 회원가입/로그인/JWT 저장
+- 프로필: 기피재료 자연어 입력 및 저장/목록 관리
+- 팀: 팀 생성/참여/상세 조회
+- 분석: 메뉴판 이미지 업로드, 결과 시각화
+- 기록: 분석 기록 조회/삭제
+- 다국어: `ko`, `en`, `es`, `fr`, `ja`, `zh`
 
-# 타겟 고객
+주요 기술
+- `Flutter`, `Dart`
+- `flutter_riverpod`, `go_router`
+- `dio`, `flutter_secure_storage`
+- `easy_localization`
 
-여러 사유로 인해 특정 식재료나 식품을 먹을 수 없는 사람
+## Backend 분석
+Spring Boot 기반 REST API 서버로 인증, 파일 처리, 분석, 기록 기능을 제공합니다.
 
-- 알러지가 있는 사람
-- 특정한 종교나 신념이 있는 사람
-    - 할랄, 코셔, 비건 등
-- 특정 질병이 있는 사람
-    - 예를 들어 쓸개 제거 수술을 진행한 환자는 생크림은 섭취 가능하나 휘핑크림은 섭취 불가
-- 그 외 음식에 대한 호불호가 강한 사람
+핵심 구성
+- 인증/회원: `/auth`, `/members`
+- 기피재료: `/avoid-items`
+- 분석/기록: `/restaurant/search`, `/histories`
+- 팀 기능: `/teams`
+- 파일 업로드: `/files` (Presigned URL + 상태 업데이트)
 
-해외여행이나 낯선 환경에서의 식사 시 이러한 개인의 입장과 상황을 고려하여, 소통의 어려움을 넘어서 사용자가 선호하고 사용자에게 안전한 음식을 제공할 수 있게 함.
+주요 기술
+- `Spring Boot`, `Spring Security`, `JPA`
+- `MySQL`, `Liquibase`
+- `OpenFeign` (AI 연동)
+- `AWS S3` (이미지 업로드)
+- `JWT` 인증
 
-# 팀 주제 (한줄 소개)
+## 화면 미리보기
+<table>
+  <tr>
+    <td align="center"><b>로그인</b></td>
+    <td align="center"><b>언어 설정</b></td>
+  </tr>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/GDGoC-CAU-Team-9/frontend/main/image/login.png" width="320" alt="Login" /></td>
+    <td><img src="https://raw.githubusercontent.com/GDGoC-CAU-Team-9/frontend/main/image/language.png" width="320" alt="Language" /></td>
+  </tr>
+  <tr>
+    <td align="center"><b>분석 기록</b></td>
+    <td align="center"><b>분석 결과</b></td>
+  </tr>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/GDGoC-CAU-Team-9/frontend/main/image/history.png" width="320" alt="History" /></td>
+    <td><img src="https://raw.githubusercontent.com/GDGoC-CAU-Team-9/frontend/main/image/result.png" width="320" alt="Result" /></td>
+  </tr>
+</table>
 
-언어와 문화, 소통이 어려운 상황에서, 사용자의 알러지, 종교, 질병을 고려해, 안전한 식당을 추천하는 서비스
 
-# 서비스 기능
+---
 
-- .
-    
-    ### 권장 사항
-    
-    제안된 솔루션, 전략 및 다음 단계
-    
-    ### 실행
-    
-    액션 아이템, 타임라인, 리소스 요구 사항
-    
-    ### 분석
-    
-    연구 결과, 데이터 인사이트, 주요 고려 사항
-    
-- 사용자의 개인 프로필 작성
-    - 알레르기 정보
-    - 질병 및 건강 관리 조건
-    - 종교/신념 기반 제한 사항
-    - 개인적 기호 및 회피 식재료 등
-- 음식점의 메뉴판의 정보를 이용해서 사용자가 원하는 음식을 입력하면, 작성한 개인 프로필을 기반으로 식당을 추천
-    - 추천된 식당의 메뉴를 분석해 알러지 유발 요소 파악
-    - 분석 내용을 기반으로 음식점 추천 스코어 제시
-
-# 기술 스택
-
-- FE: React (Web)
-    - 사용자 인터페이스
-    - 구글 맵 API 처리 (지도에 데이터 띄우기)
-- BE: Spring Boot
-    - 사용자 데이터와 검색 요청을 모아 AI에게 넘김
-    - 구글 맵 API 처리 (음식점 정보 받아오기)
-- DB: MySQL
-    - 사용자 데이터 및 검색 결과 저장
-- AI: Gemma, Gemini
-
-# 서비스 Flow
-
-1. 사용자가 미리 알러지, 종교, 질병, 기피 음식 데이터를 입력한다.
-    1. 입력 데이터 기반으로 재료 정보는 LM으로부터 받음
-2. 특정 위치에서 먹고 싶은 메뉴를 입력하면, 미리 입력된 데이터를 통해 안전한 음식점을 추천한다.
-    1. 추천하는 음식점은 “추천 점수”가 있으며, 이는 다양한 Feature에 의해 결정된다. (설명 포함)
-    2. 모든 검색 결과에 대해 안전하지 않다고 판단되면, 낮은 추천 점수를 주고 다른 메뉴를 추천한다.
+<p align="center">
+  Built by GDGoC CAU Team 9
+</p>

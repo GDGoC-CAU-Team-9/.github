@@ -11,6 +11,8 @@
   <a href="https://github.com/GDGoC-CAU-Team-9/frontend">Frontend</a>
   ·
   <a href="https://github.com/GDGoC-CAU-Team-9/backend">Backend</a>
+  ·
+  <a href="https://landing-page-bu7f.vercel.app/">Landing Page</a>
 </p>
 
 ---
@@ -77,24 +79,24 @@ Spring Boot 기반 REST API 서버로 인증, 파일 처리, 분석, 기록 기�
     <td align="center"><b>언어 설정</b></td>
   </tr>
   <tr>
-    <td><img src="https://raw.githubusercontent.com/GDGoC-CAU-Team-9/frontend/main/image/v0.9.1/login.png" width="320" alt="Login" /></td>
-    <td><img src="https://raw.githubusercontent.com/GDGoC-CAU-Team-9/frontend/main/image/v0.9.1/language.png" width="320" alt="Language" /></td>
+    <td><img src="https://raw.githubusercontent.com/GDGoC-CAU-Team-9/frontend/main/image/v0.9.2/login.png" width="320" alt="Login" /></td>
+    <td><img src="https://raw.githubusercontent.com/GDGoC-CAU-Team-9/frontend/main/image/v0.9.2/language.png" width="320" alt="Language" /></td>
   </tr>
   <tr>
     <td align="center"><b>분석 기록</b></td>
     <td align="center"><b>분석 결과</b></td>
   </tr>
   <tr>
-    <td><img src="https://raw.githubusercontent.com/GDGoC-CAU-Team-9/frontend/main/image/v0.9.1/history.png" width="320" alt="History" /></td>
-    <td><img src="https://raw.githubusercontent.com/GDGoC-CAU-Team-9/frontend/main/image/v0.9.1/result.png" width="320" alt="Result" /></td>
+    <td><img src="https://raw.githubusercontent.com/GDGoC-CAU-Team-9/frontend/main/image/v0.9.2/history.png" width="320" alt="History" /></td>
+    <td><img src="https://raw.githubusercontent.com/GDGoC-CAU-Team-9/frontend/main/image/v0.9.2/result.png" width="320" alt="Result" /></td>
   </tr>
   <tr>
     <td align="center"><b>기피재료 관리</b></td>
     <td align="center"><b>사이드바</b></td>
   </tr>
   <tr>
-    <td><img src="https://raw.githubusercontent.com/GDGoC-CAU-Team-9/frontend/main/image/v0.9.1/avoid.png" width="320" alt="Avoid" /></td>
-    <td><img src="https://raw.githubusercontent.com/GDGoC-CAU-Team-9/frontend/main/image/v0.9.1/sidebar.png" width="320" alt="Sidebar" /></td>
+    <td><img src="https://raw.githubusercontent.com/GDGoC-CAU-Team-9/frontend/main/image/v0.9.2/avoid.png" width="320" alt="Avoid" /></td>
+    <td><img src="https://raw.githubusercontent.com/GDGoC-CAU-Team-9/frontend/main/image/v0.9.2/sidebar.png" width="320" alt="Sidebar" /></td>
   </tr>
 </table>
 
